@@ -1,0 +1,690 @@
+                   ///Draw a car using Bresenham's line and mid-point circle drawing algorithm
+
+#include <gl/glut.h>
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+
+int x1,x2,y1,y2;
+
+void myInit()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+    glMatrixMode(GL_PROJECTION);
+    gluOrtho2D(0, 500, 0, 500);
+}
+
+void drawPixel(int x, int y)
+{
+    glBegin(GL_POINTS);
+    glVertex2i(x, y);
+    glEnd();
+}
+
+
+void drawCircle(int radius, int centerX, int centerY)
+{
+    int x = radius;
+    int y = 0;
+    int p = 1 - radius;
+
+    while (x >= y)
+    {
+        drawPixel(x + centerX, y + centerY);
+        drawPixel(y + centerX, x + centerY);
+        drawPixel(-x + centerX, y + centerY);
+        drawPixel(-y + centerX, x + centerY);
+        drawPixel(-x + centerX, -y + centerY);
+        drawPixel(-y + centerX, -x + centerY);
+        drawPixel(x + centerX, -y + centerY);
+        drawPixel(y + centerX, -x + centerY);
+
+        y++;
+
+        if (p <= 0)
+        {
+            p = p + 2 * y + 1;
+        }
+        else
+        {
+            x--;
+            p = p + 2 * y - 2 * x + 1;
+        }
+    }
+}
+
+void draw_pixel(int x, int y)
+{
+    glBegin(GL_POINTS);
+    glVertex2i(x, y);
+    glEnd();
+}
+
+void draw_line()
+{
+
+    ///upper straight line
+    x1=100,y1=150,x2=300,y2=150;
+    int dx, dy, i, e;
+    int incx, incy, inc1, inc2;
+    int x,y;
+
+    dx = x2-x1;
+    dy = y2-y1;
+
+    if (dx < 0) dx = -dx;
+    if (dy < 0) dy = -dy;
+    incx = 1;
+    if (x2 < x1) incx = -1;
+    incy = 1;
+    if (y2 < y1) incy = -1;
+    x = x1;
+    y = y1;
+    if (dx > dy)
+    {
+        draw_pixel(x, y);
+        e = 2 * dy-dx;
+        inc1 = 2*(dy-dx);
+        inc2 = 2*dy;
+        for (i=0; i<dx; i++)
+        {
+            if (e >= 0)
+            {
+                y += incy;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            x += incx;
+            draw_pixel(x, y);
+        }
+
+    }
+    else
+    {
+        draw_pixel(x, y);
+        e = 2*dx-dy;
+        inc1 = 2*(dx-dy);
+        inc2 = 2*dx;
+        for (i=0; i<dy; i++)
+        {
+            if (e >= 0)
+            {
+                x += incx;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            y += incy;
+            draw_pixel(x, y);
+        }
+    }
+
+    /// lower 1st part
+    x1=100,y1=100,x2=133,y2=100;
+    dx = x2-x1;
+    dy = y2-y1;
+
+    if (dx < 0) dx = -dx;
+    if (dy < 0) dy = -dy;
+    incx = 1;
+    if (x2 < x1) incx = -1;
+    incy = 1;
+    if (y2 < y1) incy = -1;
+    x = x1;
+    y = y1;
+    if (dx > dy)
+    {
+        draw_pixel(x, y);
+        e = 2 * dy-dx;
+        inc1 = 2*(dy-dx);
+        inc2 = 2*dy;
+        for (i=0; i<dx; i++)
+        {
+            if (e >= 0)
+            {
+                y += incy;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            x += incx;
+            draw_pixel(x, y);
+        }
+
+    }
+    else
+    {
+        draw_pixel(x, y);
+        e = 2*dx-dy;
+        inc1 = 2*(dx-dy);
+        inc2 = 2*dx;
+        for (i=0; i<dy; i++)
+        {
+            if (e >= 0)
+            {
+                x += incx;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            y += incy;
+            draw_pixel(x, y);
+        }
+    }
+
+    /// lower 2nd  part
+    x1=183,y1=100,x2=215,y2=100;
+
+    dx = x2-x1;
+    dy = y2-y1;
+
+    if (dx < 0) dx = -dx;
+    if (dy < 0) dy = -dy;
+    incx = 1;
+    if (x2 < x1) incx = -1;
+    incy = 1;
+    if (y2 < y1) incy = -1;
+    x = x1;
+    y = y1;
+    if (dx > dy)
+    {
+        draw_pixel(x, y);
+        e = 2 * dy-dx;
+        inc1 = 2*(dy-dx);
+        inc2 = 2*dy;
+        for (i=0; i<dx; i++)
+        {
+            if (e >= 0)
+            {
+                y += incy;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            x += incx;
+            draw_pixel(x, y);
+        }
+
+    }
+    else
+    {
+        draw_pixel(x, y);
+        e = 2*dx-dy;
+        inc1 = 2*(dx-dy);
+        inc2 = 2*dx;
+        for (i=0; i<dy; i++)
+        {
+            if (e >= 0)
+            {
+                x += incx;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            y += incy;
+            draw_pixel(x, y);
+        }
+    }
+
+   /// lower 3rd  part
+    x1=266,y1=100,x2=300,y2=100;
+
+    dx = x2-x1;
+    dy = y2-y1;
+
+    if (dx < 0) dx = -dx;
+    if (dy < 0) dy = -dy;
+    incx = 1;
+    if (x2 < x1) incx = -1;
+    incy = 1;
+    if (y2 < y1) incy = -1;
+    x = x1;
+    y = y1;
+    if (dx > dy)
+    {
+        draw_pixel(x, y);
+        e = 2 * dy-dx;
+        inc1 = 2*(dy-dx);
+        inc2 = 2*dy;
+        for (i=0; i<dx; i++)
+        {
+            if (e >= 0)
+            {
+                y += incy;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            x += incx;
+            draw_pixel(x, y);
+        }
+
+    }
+    else
+    {
+        draw_pixel(x, y);
+        e = 2*dx-dy;
+        inc1 = 2*(dx-dy);
+        inc2 = 2*dx;
+        for (i=0; i<dy; i++)
+        {
+            if (e >= 0)
+            {
+                x += incx;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            y += incy;
+            draw_pixel(x, y);
+        }
+    }
+
+    /// frontside vertical line
+    x1=100,y1=150,x2=100,y2=100;
+    dx = x2-x1;
+    dy = y2-y1;
+
+    if (dx < 0) dx = -dx;
+    if (dy < 0) dy = -dy;
+    incx = 1;
+    if (x2 < x1) incx = -1;
+    incy = 1;
+    if (y2 < y1) incy = -1;
+    x = x1;
+    y = y1;
+    if (dx > dy)
+    {
+        draw_pixel(x, y);
+        e = 2 * dy-dx;
+        inc1 = 2*(dy-dx);
+        inc2 = 2*dy;
+        for (i=0; i<dx; i++)
+        {
+            if (e >= 0)
+            {
+                y += incy;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            x += incx;
+            draw_pixel(x, y);
+        }
+
+    }
+    else
+    {
+        draw_pixel(x, y);
+        e = 2*dx-dy;
+        inc1 = 2*(dx-dy);
+        inc2 = 2*dx;
+        for (i=0; i<dy; i++)
+        {
+            if (e >= 0)
+            {
+                x += incx;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            y += incy;
+            draw_pixel(x, y);
+        }
+    }
+
+
+    ///backside vertical line
+    x1=300,y1=150,x2=300,y2=100;
+    dx = x2-x1;
+    dy = y2-y1;
+
+    if (dx < 0) dx = -dx;
+    if (dy < 0) dy = -dy;
+    incx = 1;
+    if (x2 < x1) incx = -1;
+    incy = 1;
+    if (y2 < y1) incy = -1;
+    x = x1;
+    y = y1;
+    if (dx > dy)
+    {
+        draw_pixel(x, y);
+        e = 2 * dy-dx;
+        inc1 = 2*(dy-dx);
+        inc2 = 2*dy;
+        for (i=0; i<dx; i++)
+        {
+            if (e >= 0)
+            {
+                y += incy;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            x += incx;
+            draw_pixel(x, y);
+        }
+
+    }
+    else
+    {
+        draw_pixel(x, y);
+        e = 2*dx-dy;
+        inc1 = 2*(dx-dy);
+        inc2 = 2*dx;
+        for (i=0; i<dy; i++)
+        {
+            if (e >= 0)
+            {
+                x += incx;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            y += incy;
+            draw_pixel(x, y);
+        }
+    }
+
+    ///1st glass (front)
+    x1=140,y1=150,x2=170,y2=200;
+    dx = x2-x1;
+    dy = y2-y1;
+
+    if (dx < 0) dx = -dx;
+    if (dy < 0) dy = -dy;
+    incx = 1;
+    if (x2 < x1) incx = -1;
+    incy = 1;
+    if (y2 < y1) incy = -1;
+    x = x1;
+    y = y1;
+    if (dx > dy)
+    {
+        draw_pixel(x, y);
+        e = 2 * dy-dx;
+        inc1 = 2*(dy-dx);
+        inc2 = 2*dy;
+        for (i=0; i<dx; i++)
+        {
+            if (e >= 0)
+            {
+                y += incy;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            x += incx;
+            draw_pixel(x, y);
+        }
+
+    }
+    else
+    {
+        draw_pixel(x, y);
+        e = 2*dx-dy;
+        inc1 = 2*(dx-dy);
+        inc2 = 2*dx;
+        for (i=0; i<dy; i++)
+        {
+            if (e >= 0)
+            {
+                x += incx;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            y += incy;
+            draw_pixel(x, y);
+        }
+    }
+
+    ///front to back glass connection
+    x1=170,y1=200,x2=240,y2=200;
+    dx = x2-x1;
+    dy = y2-y1;
+
+    if (dx < 0) dx = -dx;
+    if (dy < 0) dy = -dy;
+    incx = 1;
+    if (x2 < x1) incx = -1;
+    incy = 1;
+    if (y2 < y1) incy = -1;
+    x = x1;
+    y = y1;
+    if (dx > dy)
+    {
+        draw_pixel(x, y);
+        e = 2 * dy-dx;
+        inc1 = 2*(dy-dx);
+        inc2 = 2*dy;
+        for (i=0; i<dx; i++)
+        {
+            if (e >= 0)
+            {
+                y += incy;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            x += incx;
+            draw_pixel(x, y);
+        }
+
+    }
+    else
+    {
+        draw_pixel(x, y);
+        e = 2*dx-dy;
+        inc1 = 2*(dx-dy);
+        inc2 = 2*dx;
+        for (i=0; i<dy; i++)
+        {
+            if (e >= 0)
+            {
+                x += incx;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            y += incy;
+            draw_pixel(x, y);
+        }
+    }
+
+    /// 2nd glass (back)
+    x1=260,y1=150,x2=240,y2=200;
+    dx = x2-x1;
+    dy = y2-y1;
+
+    if (dx < 0) dx = -dx;
+    if (dy < 0) dy = -dy;
+    incx = 1;
+    if (x2 < x1) incx = -1;
+    incy = 1;
+    if (y2 < y1) incy = -1;
+    x = x1;
+    y = y1;
+    if (dx > dy)
+    {
+        draw_pixel(x, y);
+        e = 2 * dy-dx;
+        inc1 = 2*(dy-dx);
+        inc2 = 2*dy;
+        for (i=0; i<dx; i++)
+        {
+            if (e >= 0)
+            {
+                y += incy;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            x += incx;
+            draw_pixel(x, y);
+        }
+
+    }
+    else
+    {
+        draw_pixel(x, y);
+        e = 2*dx-dy;
+        inc1 = 2*(dx-dy);
+        inc2 = 2*dx;
+        for (i=0; i<dy; i++)
+        {
+            if (e >= 0)
+            {
+                x += incx;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            y += incy;
+            draw_pixel(x, y);
+        }
+    }
+
+
+    ///window frontside vertical
+    x1=170,y1=200,x2=170,y2=150;
+    dx = x2-x1;
+    dy = y2-y1;
+
+    if (dx < 0) dx = -dx;
+    if (dy < 0) dy = -dy;
+    incx = 1;
+    if (x2 < x1) incx = -1;
+    incy = 1;
+    if (y2 < y1) incy = -1;
+    x = x1;
+    y = y1;
+    if (dx > dy)
+    {
+        draw_pixel(x, y);
+        e = 2 * dy-dx;
+        inc1 = 2*(dy-dx);
+        inc2 = 2*dy;
+        for (i=0; i<dx; i++)
+        {
+            if (e >= 0)
+            {
+                y += incy;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            x += incx;
+            draw_pixel(x, y);
+        }
+
+    }
+    else
+    {
+        draw_pixel(x, y);
+        e = 2*dx-dy;
+        inc1 = 2*(dx-dy);
+        inc2 = 2*dx;
+        for (i=0; i<dy; i++)
+        {
+            if (e >= 0)
+            {
+                x += incx;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            y += incy;
+            draw_pixel(x, y);
+        }
+    }
+
+    ///window backside vertical
+    x1=240,y1=200,x2=240,y2=150;
+    dx = x2-x1;
+    dy = y2-y1;
+
+    if (dx < 0) dx = -dx;
+    if (dy < 0) dy = -dy;
+    incx = 1;
+    if (x2 < x1) incx = -1;
+    incy = 1;
+    if (y2 < y1) incy = -1;
+    x = x1;
+    y = y1;
+    if (dx > dy)
+    {
+        draw_pixel(x, y);
+        e = 2 * dy-dx;
+        inc1 = 2*(dy-dx);
+        inc2 = 2*dy;
+        for (i=0; i<dx; i++)
+        {
+            if (e >= 0)
+            {
+                y += incy;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            x += incx;
+            draw_pixel(x, y);
+        }
+
+    }
+    else
+    {
+        draw_pixel(x, y);
+        e = 2*dx-dy;
+        inc1 = 2*(dx-dy);
+        inc2 = 2*dx;
+        for (i=0; i<dy; i++)
+        {
+            if (e >= 0)
+            {
+                x += incx;
+                e += inc1;
+            }
+            else
+                e += inc2;
+            y += incy;
+            draw_pixel(x, y);
+        }
+    }
+
+    drawCircle(25,158,100);
+    drawCircle(25,240,100);
+
+}
+
+void myDisplay()
+{
+    draw_line();
+    glFlush();
+}
+
+int main(int argc, char **argv)
+{
+    /*
+        std::cout << "Please take the start and end points difference big like 100,200  & 200,300"<<endl<<endl;
+        std::cout << "Enter starting points (x1 y1): ";
+        std::cin >> x1 >> y1;
+        std::cout <<endl<< "Enter two endpoints (x2 y2): ";
+        std::cin >> x2 >> y2;  */
+
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+    glutInitWindowSize(500, 500);
+    glutInitWindowPosition(0, 0);
+    glutCreateWindow("Bresenham's Line Drawing");
+
+    myInit();
+    glutDisplayFunc(myDisplay);
+    glutMainLoop();
+
+
+    return 0;
+}
