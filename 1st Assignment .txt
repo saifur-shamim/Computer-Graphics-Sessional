@@ -1,0 +1,410 @@
+                                             1.  Star Shape Drawing
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
+#include <stdlib.h>
+
+void consturct()
+{
+
+    glBegin(GL_TRIANGLES);
+
+    glVertex2f(-4, 4);
+    glVertex2f(-4, -4);
+    glVertex2f(-10, 0);
+
+
+    glVertex2f(10, 0);
+    glVertex2f(4, -4);
+    glVertex2f(4, 4);
+
+
+    glVertex2f(4, -4);
+    glVertex2f(0, -10);
+    glVertex2f(-4, -4);
+
+    glVertex2f(0, 10);
+    glVertex2f(4, 4);
+    glVertex2f(-4, 4);
+
+
+    glEnd();
+
+    glBegin(GL_QUADS);
+
+
+    glVertex2f(4, 4);
+    glVertex2f(-4, 4);
+    glVertex2f(-4, -4);
+    glVertex2f(4, -4);
+
+    glEnd();
+    glFlush();
+}
+
+void reset(int width, int height)
+{
+    glViewport(0, 0, width, height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(-10, 10, -10, 10);
+    glMatrixMode(GL_MODELVIEW);
+}
+
+void print()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(0.8, 0.7, 0.0);
+    glLoadIdentity();
+
+    consturct();
+
+    glFlush();
+}
+
+
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(600, 600);
+    glutCreateWindow("Show Star");
+
+    glutDisplayFunc(print);
+    glutReshapeFunc(reset);
+
+    glutMainLoop();
+
+    return 0;
+}
+
+
+                   2. Translation of Star Shape by taking user input
+
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+#include <stdlib.h>
+#include<bits/stdc++.h>
+
+using namespace std;
+
+
+float tx,ty;
+void consturct()
+{
+    glBegin(GL_TRIANGLES);
+
+
+    glVertex2f(5, 0);
+    glVertex2f(2, -2);
+    glVertex2f(2, 2);
+
+    glVertex2f(0, 5);
+    glVertex2f(2, 2);
+    glVertex2f(-2, 2);
+
+    glVertex2f(-2, 2);
+    glVertex2f(-2, -2);
+    glVertex2f(-5, 0);
+
+
+    glVertex2f(2, -2);
+    glVertex2f(0, -5);
+    glVertex2f(-2, -2);
+
+
+    glEnd();
+
+    glBegin(GL_QUADS);
+
+
+    glVertex2f(2, 2);
+    glVertex2f(-2, 2);
+    glVertex2f(-2, -2);
+    glVertex2f(2, -2);
+
+    glEnd();
+    glFlush();
+
+}
+
+void reset(int width, int height)
+{
+    glViewport(0, 0, width, height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(-10, 10, -10, 10);
+    glMatrixMode(GL_MODELVIEW);
+}
+void print()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(0.8, 0.7, 0.0);
+    glLoadIdentity();
+
+    glTranslatef(tx, ty, 0.0);
+
+    consturct();
+
+    glFlush();
+}
+
+
+
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(400, 400);
+    glutCreateWindow("Show the Translation");
+
+    printf("Enter value of tx (range between -10 to 10): ");
+    cin>>tx;
+    printf("Enter value of ty (range between -10 to 10): ");
+    cin >> ty;
+
+    glutDisplayFunc(print);
+    glutReshapeFunc(reset);
+
+    glutMainLoop();
+
+    return 0;
+}
+
+                  3. Rotations of Star Shape by taking user input 
+
+#include <windows.h>
+#include <iostream>
+#include <stdlib.h>
+
+#ifdef __APPLE__
+#include <OpenGL/OpenGL.h>
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+#include <bits/stdc++.h>
+using namespace std;
+
+
+float ang;
+float cAng = 0.0f;
+
+void build()
+{
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_COLOR_MATERIAL);
+    glClearColor(0.7f, 0.5f, 0.0f, 0.3f);
+}
+
+
+void Resize(int w, int h)
+{
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0, (double)w / (double)h, 1.0, 200.0);
+}
+
+void keychk(unsigned char key, int x, int y)
+{
+    switch (key)
+    {
+    case 27:
+        exit(0);
+    }
+}
+
+
+void construct()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glRotatef(-cAng, 0.0f, 1.0f, 0.0f);
+    glTranslatef(0.0f, 0.0f, -5.0f);
+
+    glPushMatrix();
+    glTranslatef(0.0f, -1.0f, 0.0f);
+    glRotatef(ang, 0.0f, 0.0f, -1.0f);
+
+    glBegin(GL_POLYGON);
+    glVertex2f(0.2,0.2);
+    glVertex2f(0.2,-0.2);
+    glVertex2f(-0.2,-0.2);
+    glVertex2f(-0.2,0.2);
+    glEnd();
+    glBegin(GL_POLYGON);
+    glVertex2f(0.5,0.0);
+    glVertex2f(0.2,0.2);
+    glVertex2f(0.2,-0.2);
+    glEnd();
+    glBegin(GL_POLYGON);
+    glVertex2f(0.0,0.5);
+    glVertex2f(-0.2,0.2);
+    glVertex2f(0.2,0.2);
+    glEnd();
+    glBegin(GL_POLYGON);
+    glVertex2f(-0.5,0.0);
+    glVertex2f(-0.2,-0.2);
+    glVertex2f(-0.2,0.2);
+    glEnd();
+    glBegin(GL_POLYGON);
+    glVertex2f(0.0,-0.5);
+    glVertex2f(0.2,-0.2);
+    glVertex2f(-0.2,-0.2);
+    glEnd();
+    glPopMatrix();
+
+
+
+    glutSwapBuffers();
+}
+
+void modify(int value)
+{
+    ang += 2.0f;
+    if (ang > 360)
+    {
+        ang -= 360;
+    }
+
+    glutPostRedisplay();
+    glutTimerFunc(25, modify, 0);
+}
+
+int main(int argc, char** argv)
+{
+
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitWindowSize(700, 500);
+    glutInitWindowPosition(200, 200);
+
+    cout<<"Enter the rotation angle: ";
+    cin>>ang;
+
+    glutCreateWindow("Display");
+    build();
+
+
+    glutDisplayFunc(construct);
+    glutKeyboardFunc(keychk);
+    glutReshapeFunc(Resize);
+
+    glutTimerFunc(25, modify, 0);
+
+    glutMainLoop();
+    return 0;
+}
+
+                                    4.  Reflections of Star Shape
+
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
+#include <stdlib.h>
+#include<bits/stdc++.h>
+using namespace std;
+
+void reset(int w, int h) {
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-10, 10, -10, 10, -10, 10);
+    glMatrixMode(GL_MODELVIEW);
+}
+
+void construct() {
+    glBegin(GL_POLYGON);
+    glVertex2f(3, 6);
+    glVertex2f(5, 6);
+    glVertex2f(5, 4);
+    glVertex2f(3, 4);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    glVertex2f(4, 7.5);
+    glVertex2f(5, 6);
+    glVertex2f(3, 6);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    glVertex2f(5, 6);
+    glVertex2f(6.5, 5);
+    glVertex2f(5, 4);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    glVertex2f(5, 4);
+    glVertex2f(4, 2.5);
+    glVertex2f(3, 4);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    glVertex2f(3, 4);
+    glVertex2f(1.5, 5);
+    glVertex2f(3, 6);
+    glEnd();
+
+
+}
+
+void print() {
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(1.0, 1.0, 1.0);
+    glLoadIdentity();
+
+    construct();
+
+
+    glPushMatrix();
+    glScalef(-1.0, 1.0, 1.0);
+    glColor3f(1.0, 0.0, 0.0);
+    construct();
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(1.0, -1.0, 1.0);
+    glColor3f(0.0, 1.0, 0.0);
+    construct();
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(-1.0, -1.0, 1.0);
+    glColor3f(0.0, 0.0, 1.0);
+    construct();
+    glPopMatrix();
+
+    glFlush();
+}
+
+
+
+
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(700, 700);
+    glutInitWindowPosition (100, 100);
+    glutCreateWindow("Reflection Window");
+
+    glutDisplayFunc(print);
+    glutReshapeFunc(reset);
+
+    glutMainLoop();
+
+    return 0;
+}
+
+
